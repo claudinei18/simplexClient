@@ -1,0 +1,119 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/**
+ * Created by claudinei on 18/03/17.
+ */
+public class main {
+    public static void main(String[] args){
+        Simplex simplex = new Simplex();
+    }
+}
+
+class Simplex{
+    No[][] matriz;
+
+    public Simplex() {
+        BufferedReader	inReader;
+        inReader = new BufferedReader(new InputStreamReader(System.in));
+        int numLin = 0, numCol = 0;
+
+        try {
+            String nVar = inReader.readLine();
+            String nRes = inReader.readLine();
+            int numRes = Integer.parseInt(nRes);
+            numLin = 2 + numRes;
+            int numVar = Integer.parseInt(nVar);
+            numCol = 2 + numVar;
+            matriz = new No[2 + numRes][2 + numVar];
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            for(int l = 0; l < numLin; l++){
+                for(int c = 0; c < numCol; c++){
+                    String linha = inReader.readLine();
+                    for(int i = 0; linha != null; i++, linha = inReader.readLine()){
+                        String[] linhaAux = linha.split(" ");
+                        if(i == 0){
+                            if(linhaAux[0].equals("Maximize")){
+                                for(int j = 2; j < linhaAux.length; j++){
+                                    System.out.println(linhaAux[j]);
+                                    if(linhaAux[j].matches("[a-zA-Z]+")){
+
+                                    }
+                                    else if( linhaAux[j].equals("+")){
+                                        System.out.println("MAIS");
+                                    }else if( linhaAux[j].equals("-") ){
+                                        System.out.println("MENOS");
+                                    }else {
+
+                                        String element = linhaAux[j].replaceAll("\\D+","");
+                                        System.out.println(element);
+                                    }
+                                }
+                                System.out.println("Maximize");
+                            }else if(linhaAux[0].equals("Minimize")){
+                                System.out.println("Minimize");
+                            }else{
+                                System.out.println("Maximize or Minimize expected.");
+                                break;
+                            }
+                        }
+                        System.out.println(linha);
+                    }
+                }
+            }
+
+
+            inReader.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+
+
+    }
+}
+
+
+class No{
+    private double sup;
+    private double inf;
+    private String var;
+
+    public  No(String var, double sup, double inf) {
+        this.var = var;
+        this.sup = sup;
+        this.inf = inf;
+    }
+
+    public double getSup() {
+        return sup;
+    }
+
+    public void setSup(double sup) {
+        this.sup = sup;
+    }
+
+    public double getInf() {
+        return inf;
+    }
+
+    public void setInf(double inf) {
+        this.inf = inf;
+    }
+
+    public String getVar() {
+        return var;
+    }
+
+    public void setVar(String var) {
+        this.var = var;
+    }
+}
+
+
